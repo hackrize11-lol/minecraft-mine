@@ -8,7 +8,7 @@ let countMined = 0;
 let countChecked = 0;
 const counterMinedElement = document.getElementById('counterMined');
 const counterCheckedElement = document.getElementById('counterChecked');
-const clickedButtonsElement = document.getElementById('clickedButtons');
+
 
 // Array to store clicked button IDs
 let clickedButtons = [];
@@ -68,7 +68,7 @@ buttons.forEach(button => {
         updateCheckedCounter();
         updateClickedButtons(buttonId);
         
-        // Disable the clicked button
+        
         button.disabled = true;
 
         // Check nearby buttons
