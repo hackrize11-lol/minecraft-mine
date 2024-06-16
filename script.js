@@ -33,27 +33,29 @@ function updateClickedButtons(buttonId) {
 function checkNearbyButtons(buttonId) {
     const buttonIndex = parseInt(buttonId.replace('button', ''));
     const gridSize = 20; // Adjust based on your actual grid size
-    const nearbyIndices = [
-        buttonIndex - gridSize, // up
-        buttonIndex + gridSize, // down
-        buttonIndex - 1,  // left
-        buttonIndex + 1   // right
-    ];
+    const gridColumns = 20; // Adjust based on your grid columns
 
-    nearbyIndices.forEach(index => {
+    const upIndex = buttonIndex - gridColumns;
+    const downIndex = buttonIndex + gridColumns;
+    const leftIndex = buttonIndex - 1;
+    const rightIndex = buttonIndex + 1;
+
+    // Check and disable nearby buttons
+    disableIfChecked(upIndex);
+    disableIfChecked(downIndex);
+    disableIfChecked(leftIndex);
+    disableIfChecked(rightIndex);
+
+    function disableIfChecked(index) {
         const nearbyButton = document.getElementById(`button${index}`);
         if (nearbyButton && !nearbyButton.disabled) {
-            // Update check count for the nearby button
             checkCounts[index] = (checkCounts[index] || 0) + 1;
-
-            // Disable button if it has been checked twice
             if (checkCounts[index] >= 2) {
                 nearbyButton.disabled = true;
             }
-
             updateCheckedCounter();
         }
-    });
+    }
 }
 
 // Add event listener to each button
@@ -61,7 +63,7 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         const buttonId = button.id;
 
-        // Call the updateCounters function when button is clicked
+        // Update counters and clicked buttons list
         updateCounters();
         updateCheckedCounter();
         updateClickedButtons(buttonId);
