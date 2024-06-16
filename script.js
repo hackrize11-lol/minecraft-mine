@@ -10,7 +10,7 @@ const counterElement = document.getElementById('counter');
 // Update counter function
 function updateCounter() {
     count++;
-    counterElement.textContent = count;
+    counterElement.textContent = blocks mined:${count};
 }
 
 // Add event listener to each button
