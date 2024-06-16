@@ -1,14 +1,12 @@
-// script.js
-
 // Select all buttons
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button.grid-item');
 
 // Counter initialization
 let countMined = 0;
 let countChecked = 0;
 const counterMinedElement = document.getElementById('counterMined');
 const counterCheckedElement = document.getElementById('counterChecked');
-
+const clickedButtonsElement = document.getElementById('clickedButtons');
 
 // Array to store clicked button IDs
 let clickedButtons = [];
@@ -67,8 +65,8 @@ buttons.forEach(button => {
         updateCounters();
         updateCheckedCounter();
         updateClickedButtons(buttonId);
-        
-        
+
+        // Disable the clicked button
         button.disabled = true;
 
         // Check nearby buttons
