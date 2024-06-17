@@ -11,9 +11,6 @@ const clickedButtonsElement = document.getElementById('clickedButtons');
 // Array to store clicked button IDs
 let clickedButtons = [];
 
-// Object to store check counts for each button
-let checkCounts = {};
-
 // Update counters function
 function updateCounters() {
     countMined++;
@@ -30,48 +27,34 @@ function updateClickedButtons(buttonId) {
     clickedButtonsElement.textContent = `Clicked Buttons: ${clickedButtons.join(', ')}`;
 }
 
-function checkNearbyButtons(buttonId) {
-    const buttonIndex = parseInt(buttonId.replace('button', ''));
-    const gridSize = 20; // Adjust based on your actual grid size
-    const gridColumns = 20; // Adjust based on your grid columns
 
-    const upIndex = buttonIndex - gridColumns;
-    const downIndex = buttonIndex + gridColumns;
-    const leftIndex = buttonIndex - 1;
-    const rightIndex = buttonIndex + 1;
+function updateClickedButtons(buttonId) {
+    const buttonIdNum = parseInt(buttonId.replace('button', ''), 10);
+    const buttonIdsToCheck = [
+        buttonIdNum,
+        buttonIdNum + 20,
+        buttonIdNum - 1,
+        buttonIdNum + 1,
+        buttonIdNum - 20
+    ];
 
-    // Check and disable nearby buttons
-    disableIfChecked(upIndex);
-    disableIfChecked(downIndex);
-    disableIfChecked(leftIndex);
-    disableIfChecked(rightIndex);
-
-    function disableIfChecked(index) {
-        const nearbyButton = document.getElementById(`button${index}`);
-        if (nearbyButton && !nearbyButton.disabled) {
-            checkCounts[index] = (checkCounts[index] || 0) + 1;
-            if (checkCounts[index] >= 2) {
-                nearbyButton.disabled = true;
-            }
-            updateCheckedCounter();
+    buttonIdsToCheck.forEach(id => {
+        const newButtonId = `button${id}`;
+        if (!clickedButtons.includes(newButtonId)) {
+            clickedButtons.push(newButtonId);
+            checkedBlocks++;
+            console.log(`Button with ID ${newButtonId} clicked. Current state of clickedButtons:`, clickedButtons);
+            console.log(`Checked Blocks: ${buttonIdsToCheck}`);
         }
-    }
+    });
 }
-
 // Add event listener to each button
-buttons.forEach(button => {
+document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', function() {
-        const buttonId = button.id;
-
-        // Update counters and clicked buttons list
+        updateClickedButtons(button.id);
         updateCounters();
-        updateCheckedCounter();
-        updateClickedButtons(buttonId);
-
-        // Disable the clicked button
-        button.disabled = true;
-
-        // Check nearby buttons
-        checkNearbyButtons(buttonId);
+        updateCheckedCounters()
+        button.disable= true;
+        
     });
 });
