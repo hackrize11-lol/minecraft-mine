@@ -4,12 +4,10 @@ let blocksChecked = 0;
 
 // Function to update counters
 function updateCounters() {
-    blocksMined++;
     document.getElementById('blocksMined').textContent = `Blocks Mined: ${blocksMined}`;
 }
 
 function updateCheckedCounter() {
-    blocksChecked++;
     document.getElementById('blocksChecked').textContent = `Blocks Checked: ${blocksChecked}`;
 }
 
@@ -18,10 +16,11 @@ function mineBlock(blockId) {
     const blockIndex = parseInt(blockId.replace('block', ''), 10);
     const gridSize = 20; // Adjust based on your grid size
 
-    // Mine the block (simulate the action)
+    // Simulate mining the block (for demonstration)
     console.log(`Mining block ${blockId}`);
 
     // Update counters
+    blocksMined++;
     updateCounters();
 
     // Check adjacent blocks
@@ -47,10 +46,11 @@ function checkAdjacentBlocks(index) {
             console.log(`Checking adjacent block ${adjacentBlockId}`);
             adjacentBlockElement.classList.add('checked');
 
-            // Perform actions on the adjacent block (simulated)
+            // Simulate interaction with the adjacent block (for demonstration)
             console.log(`Interacting with adjacent block ${adjacentBlockId}`);
 
             // Update counters
+            blocksChecked++;
             updateCheckedCounter();
 
             // Recursively check its adjacent blocks if needed
@@ -64,5 +64,6 @@ document.querySelectorAll('.block').forEach(block => {
     block.addEventListener('click', function() {
         const blockId = block.id;
         mineBlock(blockId);
+        block.style.backgroundColor = '#999'; // Change block color after mining (for demonstration)
     });
 });
